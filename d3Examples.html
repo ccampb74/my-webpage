@@ -1,24 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
 <meta charset="utf-8">
-  <head>
-    <title>Halloween Spending Difference between 2004 and 2019</title>
-  </head>
- <body>
+<title>Halloween Spending Difference between 2004 and 2019</title>
 
-       svg.append("image")
-     .attr("xlink:href", "legend.jpg")
-     .attr("x", 100)
-     .attr("y", 0)
-     .attr("width", 100)
-     .attr("height", 120);
-
-    svg.append("text")
-    .attr("x", width / 2) // Center the title horizontally
-    .attr("y", 20) // Adjust the vertical position as needed
-    .attr("text-anchor", "middle")
-    .style("font-size", "16px") // Adjust the font size as needed
-    .text("Halloween Spending 2004 vs 2019");
 <!-- Load d3.js -->
 <script src="https://d3js.org/d3.v4.js"></script>
 <!-- Color scale -->
@@ -90,6 +73,20 @@ function update(data) {
   u
     .exit()
     .remove()
+
+       svg.append("image")
+     .attr("xlink:href", "legend.jpg")
+     .attr("x", 100)
+     .attr("y", 0)
+     .attr("width", 100)
+     .attr("height", 120);
+
+    svg.append("text")
+    .attr("x", width / 2) // Center the title horizontally
+    .attr("y", 20) // Adjust the vertical position as needed
+    .attr("text-anchor", "middle")
+    .style("font-size", "16px") // Adjust the font size as needed
+    .text("Halloween Spending 2004 vs 2019");
 }
 
 // Initialize the plot with the first dataset
@@ -98,6 +95,3 @@ update(data2005)
 
     
 </script>
-         </main>
-  </body>
-</html>
