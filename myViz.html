@@ -10,7 +10,9 @@
         <p>This page will include examples of data visualizations we've done for class.</p>
         <img src="output.png" width="600" alt="Power Usage Seasonal Map- Monthly">
     </div>
-    
+    <div class="container">
+        <h2>Halloween Spending 2005 vs 2019</h2>
+    </div>    
 <!-- Load d3.js -->
 <script src="https://d3js.org/d3.v4.js"></script>
 <!-- Color scale -->
@@ -91,19 +93,10 @@ update(data2005)
     
 </script>
 
-       svg.append("image")
-     .attr("xlink:href", "legend.jpg")
-     .attr("x", 100)
-     .attr("y", 0)
-     .attr("width", 100)
-     .attr("height", 120);
+    <div class="container">
+        <img src="legend.png" width="200" alt="Legend">
+    </div>
 
-    svg.append("text")
-    .attr("x", width / 2) // Center the title horizontally
-    .attr("y", 20) // Adjust the vertical position as needed
-    .attr("text-anchor", "middle")
-    .style("font-size", "16px") // Adjust the font size as needed
-    .text("Halloween Spending 2004 vs 2019");
     
         <div class="container">
         <a href="./index.html"><h2>Return to Home Page</h2></a>
