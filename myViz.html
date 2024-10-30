@@ -82,6 +82,14 @@ function update(data) {
   u
     .exit()
     .remove()
+}
+
+// Initialize the plot with the first dataset
+update(data2005)
+
+
+    
+</script>
 
        svg.append("image")
      .attr("xlink:href", "legend.jpg")
@@ -96,15 +104,7 @@ function update(data) {
     .attr("text-anchor", "middle")
     .style("font-size", "16px") // Adjust the font size as needed
     .text("Halloween Spending 2004 vs 2019");
-}
-
-// Initialize the plot with the first dataset
-update(data2005)
-
-
     
-</script>
-
         <div class="container">
         <a href="./index.html"><h2>Return to Home Page</h2></a>
     </div>
