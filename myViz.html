@@ -11,6 +11,100 @@
         <img src="https://cdn.discordapp.com/attachments/755285234139922496/1300480152844763197/output.png?ex=6720fe06&is=671fac86&hm=1f6ee0f4366d69ef5f5179a0b70b743c98d0e83e9380e2133d410c43d4253b03&" alt="Power Usage Seasonal Map- Monthly">
         <a href="./index.html"><h2>Return to Home Page</h2></a>
     </div>
+    
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
+<!-- Color scale -->
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+<!-- Add 2 buttons -->
+<button onclick="update(data2005)">Halloween Spending 2005</button>
+<button onclick="update(data2019)">Halloween Spending 2019</button>
+
+<!-- Create a div where the graph will take place -->
+<div id="my_dataviz"></div>
+<script>
+
+// set the dimensions and margins of the graph
+var width = 450
+    height = 450
+    margin = 40
+
+// The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+var radius = Math.min(width, height) / 2 - margin
+
+// append the svg object to the div called 'my_dataviz'
+var svg = d3.select("#my_dataviz")
+  .append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+// create 2 data_set
+var data2005 = {cos: 1.2, can: 1.2, dec:0.8, car:0.1}
+var data2019 = {cos: 3.2, can: 2.6, dec:2.6, car:0.4}
+
+// set the color scale
+var color = d3.scaleOrdinal()
+  .domain(["cos", "can", "dec", "car"])
+  .range(d3.schemeDark2);
+
+// A function that create / update the plot for a given variable:
+function update(data) {
+
+  // Compute the position of each group on the pie:
+  var pie = d3.pie()
+    .value(function(d) {return d.value; })
+    .sort(function(a, b) { console.log(a) ; return d3.ascending(a.key, b.key);} ) // This make sure that group order remains the same in the pie chart
+  var data_ready = pie(d3.entries(data))
+
+  // map to data
+  var u = svg.selectAll("path")
+    .data(data_ready)
+
+  // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+  u
+    .enter()
+    .append('path')
+    .merge(u)
+    .transition()
+    .duration(1000)
+    .attr('d', d3.arc()
+      .innerRadius(0)
+      .outerRadius(radius)
+    )
+    .attr('fill', function(d){ return(color(d.data.key)) })
+    .attr("stroke", "white")
+    .style("stroke-width", "2px")
+    .style("opacity", 1)
+
+  // remove the group that is not present anymore
+  u
+    .exit()
+    .remove()
+
+       svg.append("image")
+     .attr("xlink:href", "legend.jpg")
+     .attr("x", 100)
+     .attr("y", 0)
+     .attr("width", 100)
+     .attr("height", 120);
+
+    svg.append("text")
+    .attr("x", width / 2) // Center the title horizontally
+    .attr("y", 20) // Adjust the vertical position as needed
+    .attr("text-anchor", "middle")
+    .style("font-size", "16px") // Adjust the font size as needed
+    .text("Halloween Spending 2004 vs 2019");
+}
+
+// Initialize the plot with the first dataset
+update(data2005)
+
+
+    
+</script>
     </main>
   </body>
 </html>
