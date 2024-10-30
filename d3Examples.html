@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<title>Halloween Spending Difference between 2004 and 2019</title>
 
 <!-- Load d3.js -->
 <script src="https://d3js.org/d3.v4.js"></script>
@@ -37,7 +38,7 @@ var data2019 = {cos: 3.2, can: 2.6, dec:2.6, car:0.4}
 
 // set the color scale
 var color = d3.scaleOrdinal()
-  .domain(["Costumes", "Candy", "Decorations", "Cards"])
+  .domain(["cos", "can", "dec", "car"])
   .range(d3.schemeDark2);
 
 // A function that create / update the plot for a given variable:
