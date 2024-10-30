@@ -4,8 +4,6 @@
 
 <!-- Load d3.js -->
 <script src="https://d3js.org/d3.v4.js"></script>
-<p>Halloween Spending 2004 vs 2019</p>
-
 <!-- Color scale -->
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 
@@ -87,5 +85,12 @@ update(data2005)
      .attr("y", 0)
      .attr("width", 100)
      .attr("height", 120);
+
+    svg.append("text")
+    .attr("x", width / 2) // Center the title horizontally
+    .attr("y", 20) // Adjust the vertical position as needed
+    .attr("text-anchor", "middle")
+    .style("font-size", "16px") // Adjust the font size as needed
+    .text("Halloween Spending 2004 vs 2019");
     
 </script>
