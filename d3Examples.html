@@ -75,22 +75,16 @@ function update(data) {
     .exit()
     .remove()
 
-
-// Now add the annotation. Use the centroid method to get the best coordinates    
-svg
-  .selectAll('mySlices')
-  .data(data_ready)
-  .enter()
-  .append('text')
-  .text(function(d){ return "grp " + d.data2005.key})
-  .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
-  .style("text-anchor", "middle")
-  .style("font-size", 17)
 }
 
 // Initialize the plot with the first dataset
 update(data2005)
 
-
+   svg.append("image")
+     .attr("xlink:href", "legend.jpg")
+     .attr("x", 10)
+     .attr("y", 10)
+     .attr("width", 100)
+     .attr("height", 80);
     
 </script>
