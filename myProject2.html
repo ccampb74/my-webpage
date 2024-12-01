@@ -18,6 +18,7 @@ h2 {text-align: center;}
 <script src="https://d3js.org/d3.v4.js"></script>
 
 <!-- Add 2 buttons -->
+<button onclick="update(data3)">Fall 2023</button>
 <button onclick="update(data1)">Spring 2024</button>
 <button onclick="update(data2)">Fall 2024</button>
 
@@ -26,24 +27,27 @@ h2 {text-align: center;}
 
     <script>
 
-// create 2 data_set
+// create 3 data_set
+
 var data1 = [
-   {group: "Prob and Stats", value: 94},
-   {group: "Intro Theory of Comp.", value: 96},
-   {group: "Principles of Databases", value: 98}
-];
-
-var data2 = [
-   {group: "Operating Systems", value: 97},
-   {group: "Data Visualization", value: 88}
-];
-
-var data3 = [
    {group: "Comp. Org. 2", value: 95},
    {group: "SW Dev", value: 93},
    {group: "Comp. Ethics", value: 99},
    {group: "Discrete Struct.", value: 96}
 ];
+var data2 = [
+   {group: "Operating Systems", value: 97},
+   {group: "Data Visualization", value: 88}
+];
+var data3 = [
+   {group: "Prob and Stats", value: 94},
+   {group: "Intro Theory of Comp.", value: 96},
+   {group: "Principles of Databases", value: 98}
+];
+
+
+
+
 
 // set the dimensions and margins of the graph
 var margin = {top: 30, right: 30, bottom: 70, left: 60},
