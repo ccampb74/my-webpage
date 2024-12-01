@@ -2,129 +2,104 @@
 <html lang="en">
   <head>
     <style>
-      h1 { text-align: center; }
-      p { text-align: center; }
-      div { text-align: center; }
-      h2 { text-align: center; }
-
-      //tooltip
-      .tooltip {
-        position: absolute;
-        text-align: center;
-        padding: 8px;
-        background-color: rgba(0, 0, 0, 0.7);
-        color: white;
-        border-radius: 4px;
-        pointer-events: none; /* Prevent tooltip from blocking events */
-        opacity: 0;
-        transition: opacity 0.2s;
-      }
-    </style>
+h1 {text-align: center;}
+p {text-align: center;}
+div {text-align: center;}
+h2 {text-align: center;}
+</style>
     <meta charset="UTF-8">
     <title>Project 2</title>
   </head>
   <body>
     <div class="container">
-      <h2>Grades between Spring 2024 and Fall 2024</h2>
+        <h2>Grades between Spring 2024 and Fall 2024</h2>
     </div>   
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
 
-    <!-- Load d3.js -->
-    <script src="https://d3js.org/d3.v4.js"></script>
+<!-- Add 2 buttons -->
+<button onclick="update(data1)">Spring 2024</button>
+<button onclick="update(data2)">Fall 2024</button>
 
-    <!-- Add 2 buttons -->
-    <button onclick="update(data1)">Spring 2024</button>
-    <button onclick="update(data2)">Fall 2024</button>
-
-    <!-- Create a div where the graph will take place -->
-    <div id="my_dataviz"></div>
-
-    <!-- Tooltip -->
-    <div class="tooltip" id="tooltip"></div>
+<!-- Create a div where the graph will take place -->
+<div id="my_dataviz"></div>
 
     <script>
-      // Create 2 data_set
-      var data1 = [
-        {group: "Prob and Stats", value: 94},
-        {group: "Intro Theory of Comp.", value: 96},
-        {group: "Principles of Databases", value: 98}
-      ];
 
-      var data2 = [
-        {group: "Operating Systems", value: 97},
-        {group: "Data Visualization", value: 88}
-      ];
+// create 2 data_set
+var data1 = [
+   {group: "Prob and Stats", value: 94},
+   {group: "Intro Theory of Comp.", value: 96},
+   {group: "Principles of Databases", value: 98}
+];
 
-      // Set the dimensions and margins of the graph
-      var margin = {top: 30, right: 30, bottom: 70, left: 60},
-          width = 460 - margin.left - margin.right,
-          height = 400 - margin.top - margin.bottom;
+var data2 = [
+   {group: "Operating Systems", value: 97},
+   {group: "Data Visualization", value: 88}
+];
 
-      // Append the svg object to the body of the page
-      var svg = d3.select("#my_dataviz")
-        .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+// set the dimensions and margins of the graph
+var margin = {top: 30, right: 30, bottom: 70, left: 60},
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
 
-      // Initialize the X axis
-      var x = d3.scaleBand()
-        .range([0, width])
-        .padding(0.2);
-      var xAxis = svg.append("g")
-        .attr("transform", "translate(0," + height + ")");
+// append the svg object to the body of the page
+var svg = d3.select("#my_dataviz")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
 
-      // Initialize the Y axis
-      var y = d3.scaleLinear()
-        .range([height, 0]);
-      var yAxis = svg.append("g")
-        .attr("class", "myYaxis");
+// Initialize the X axis
+var x = d3.scaleBand()
+  .range([ 0, width ])
+  .padding(0.2);
+var xAxis = svg.append("g")
+  .attr("transform", "translate(0," + height + ")")
 
-      // A function that creates / updates the plot for a given variable:
-      function update(data) {
+// Initialize the Y axis
+var y = d3.scaleLinear()
+  .range([ height, 0]);
+var yAxis = svg.append("g")
+  .attr("class", "myYaxis")
 
-        // Update the X axis
-        x.domain(data.map(function(d) { return d.group; }));
-        xAxis.call(d3.axisBottom(x));
 
-        // Update the Y axis
-        y.domain([0, d3.max(data, function(d) { return d.value; })]);
-        yAxis.transition().duration(1000).call(d3.axisLeft(y));
+// A function that create / update the plot for a given variable:
+function update(data) {
 
-        // Create the u variable
-        var u = svg.selectAll("rect")
-          .data(data);
+  // Update the X axis
+  x.domain(data.map(function(d) { return d.group; }))
+  xAxis.call(d3.axisBottom(x))
 
-        u.enter()
-          .append("rect") // Add a new rect for each new element
-          .merge(u) // Get the already existing elements as well
-          .transition() // Apply changes to all of them
-          .duration(1000)
-          .attr("x", function(d) { return x(d.group); })
-          .attr("y", function(d) { return y(d.value); })
-          .attr("width", x.bandwidth())
-          .attr("height", function(d) { return height - y(d.value); })
-          .attr("fill", "#69b3a2")
-          .on("mouseover", function(event, d) {
-            // Show the tooltip with the value of the bar
-            var tooltip = d3.select("#tooltip");
-            tooltip.style("opacity", 1)
-              .html(d.value) // Add the value to the tooltip
-              .style("left", (event.pageX + 5) + "px")
-              .style("top", (event.pageY - 30) + "px");
-          })
-          .on("mouseout", function() {
-            // Hide the tooltip when mouse leaves
-            d3.select("#tooltip").style("opacity", 0);
-          });
+  // Update the Y axis
+  y.domain([0, d3.max(data, function(d) { return d.value }) ]);
+  yAxis.transition().duration(1000).call(d3.axisLeft(y));
 
-        // If there are fewer groups in the new dataset, delete the ones not in use anymore
-        u.exit().remove();
-      }
+  // Create the u variable
+  var u = svg.selectAll("rect")
+    .data(data)
 
-      // Initialize the plot with the first dataset
-      update(data1);
+  u
+    .enter()
+    .append("rect") // Add a new rect for each new elements
+    .merge(u) // get the already existing elements as well
+    .transition() // and apply changes to all of them
+    .duration(1000)
+      .attr("x", function(d) { return x(d.group); })
+      .attr("y", function(d) { return y(d.value); })
+      .attr("width", x.bandwidth())
+      .attr("height", function(d) { return height - y(d.value); })
+      .attr("fill", "#69b3a2")
 
-    </script>
-  </body>
-</html>
+  // If less group in the new dataset, I delete the ones not in use anymore
+  u
+    .exit()
+    .remove()
+}
+
+// Initialize the plot with the first dataset
+update(data1)
+
+</script>
